@@ -4,17 +4,24 @@ const csv = require("csvtojson");
 
 (async () => {
   const input = await csv().fromFile("./input.csv");
-  const filename = `./output/output-${Date.now()}.csv`;
+  const filename = `./output/output-lazada-${services.getDate()}.csv`;
   services.createFile(filename);
 
   for (let item of input) {
-    const html = await services.getHtml(item.lazada);
-    const lazada = Lazada(html);
-    const product = lazada.getProduct();
-    services.appendToFile(filename, product);
-
-    const delay = 90 * 1000; // 1 min 30 sec
-    await new Promise((resolve) => setTimeout(resolve, delay));
+    const url = item.lazada;
+    const isValid = services.validateUrl(url);
+    if (isValid) {
+      const html = await services.getHtml(url);
+      const lazada = Lazada(html, url);
+      const product = lazada.getProduct();
+      services.appendToFile(filename, product);
+      console.log(product.title);
+      const delay = 120 * 1000; // 2 minutes
+      await new Promise((resolve) => setTimeout(resolve, delay));
+    } else {
+      services.appendToFile(filename, null);
+    }
   }
+
   console.log("scrape finished !");
 })();

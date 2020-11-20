@@ -1,6 +1,6 @@
 const cheerio = require("cheerio");
 
-const Lazada = (html) => {
+const Lazada = (html, url) => {
   const $ = cheerio.load(html);
 
   /**
@@ -11,8 +11,10 @@ const Lazada = (html) => {
   const getProduct = () => {
     const product = {};
 
-    const breadcrumb = $("ul[class=breadcrumb]").children();
+    // link
+    product["link"] = url;
 
+    const breadcrumb = $("ul[class=breadcrumb]").children();
     // title
     product["title"] = $(breadcrumb[breadcrumb.length - 1])
       .find("span.breadcrumb_item_text > span")
@@ -45,13 +47,42 @@ const Lazada = (html) => {
     product["promotion"] = $("div.promotion-tag-item > div").text();
 
     // soldBy
-    product["soldBy"] = $("div.seller-name__detail > a").first().text();
+    product["seller"] = $("div.seller-name__detail > a").first().text();
 
-    // positive seller rating
-    product["positiveSellerRating"] = $("div[class=pdp-seller-info-pc] > div")
-      .first()
+    // seller info
+    const sellerInfo = $("div[class=pdp-seller-info-pc]").children();
+    product["positiveSellerRating"] = $(sellerInfo[0]).children().last().text();
+    product["shipOnTime"] = $(sellerInfo[1]).children().last().text();
+    product["chatResponseRate"] = $(sellerInfo[2]).children().last().text();
+
+    // authenticity
+    const isAuthentic = $("div[class=delivery-option-item__info]")
+      .find("div.delivery-option-item__title")
+      .text()
+      .trim();
+    product["authenticity"] =
+      isAuthentic === "100% Authentic" ? isAuthentic : "";
+
+    // Warranty
+    product["warrantyType"] = "";
+    product["warrantyPeriod"] = "";
+    $("div[class=pdp-general-features] > ul")
       .children()
-      .last()
+      .each((i, elem) => {
+        const key = $(elem).find("span").text().trim();
+        if (key === "Warranty Type") {
+          product["warrantyType"] = $(elem).find("div.key-value").text();
+        } else if (key === "Warranty Period") {
+          product["warrantyPeriod"] = $(elem).find("div.key-value").text();
+        }
+      });
+
+    // Standard delivery
+    product["standardDeliveryTime"] = $("div[class=delivery]")
+      .find("div[class=delivery-option-item__time]")
+      .text();
+    product["shippingCost"] = $("div[class=delivery]")
+      .find("div[class=delivery-option-item__shipping-fee]")
       .text();
 
     // rating
@@ -79,8 +110,8 @@ const Lazada = (html) => {
       .find("span.percent")
       .text();
 
+    // product availability
     const isAvailable = $("*").is("button.add-to-cart-buy-now-btn");
-
     product["availability"] = isAvailable;
 
     return product;
