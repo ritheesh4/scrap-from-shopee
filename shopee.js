@@ -14,17 +14,21 @@ const Shopee = (html, url) => {
     // link
     product["link"] = url;
 
+    // Product category
     product["Product_Category"] = $("a[class=JFOy4z]").last().text()
 
+    // Product name
     product["Product_Name"] = $("div[class=qaNIZv]")
       .find("span")
       .first()
       .text();
 
+    // Brand name
     product["Brand"] = $("a[class=_2H-513]")
       .first()
       .text();
 
+    // Best before   
     const BestBeforeLabel = $("div[class=_2aZyWI]").find("div").eq(3).find('label').text()
     if (BestBeforeLabel === 'Best Before') {
       product["Best_Before"] = $("div[class=_2aZyWI]").find("div").eq(3).find('div').text()
@@ -32,23 +36,51 @@ const Shopee = (html, url) => {
       product["Best_Before"] = ''
     }
 
+    // Stock available
+    $("div[class=_2aZyWI]")
+      .children()
+      .each((i, elem) => {
+        const key = $(elem).find("label").text().trim();
+        if (key === "Stock") {
+          product["Stock_available"] = $(elem).find("div").text();
+        }
+      })
 
+    // Price
     product["Price"] = $("div[class=_3n5NQx]")
       .first()
       .text();
 
-    // product["Response_Time"] = $("span[class=_1rsHot]")
-    //   .first()
-    //   .text();
+    //Rating count    
+    product["Ratings_count"] = $("div.flex.M3KjhJ").first().text()
+
+    // Number of ratings
+    product["#_of_ratings"] = $("div[class=_3Oj5_n]").text()
+
+    // Sold
+    product["Sold"] = $("div[class=_22sp0A]").text()
+
+    // Shipping fee  
+     product["Shipping_fee"] = $("div.flex.items-center.BtHdNz").first().text()
+
+    // Shoping ratings
     product["Shop_Ratings"] = $("div[class=_3mK1I2]").find('span').first().text()
 
+    // Products count
     product["Products_count"] = $("div[class=_3mK1I2]").find('span').eq(1).text()
-
+    
+    // Response rate
     product["Response_rate"] = $("div[class=_3mK1I2]").find('span').eq(2).text()
 
+    // Reponse Time
     product["Response_Time"] = $("div[class=_3mK1I2]").find('span').eq(3).text()
 
+    // Followers
     product["Followers"] = $("div[class=_3mK1I2]").find('span').eq(5).text()
+    
+    // Shop voucher
+    product["Shop_voucher"] = $("span.voucher-promo-value").text()
+
 
 
     // ("p:nth-child(3)")
