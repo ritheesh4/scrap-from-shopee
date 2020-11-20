@@ -25,8 +25,13 @@ const Shopee = (html, url) => {
       .first()
       .text();
 
+    const BestBeforeLabel = $("div[class=_2aZyWI]").find("div").eq(3).find('label').text()
+    if (BestBeforeLabel === 'Best Before') {
+      product["Best_Before"] = $("div[class=_2aZyWI]").find("div").eq(3).find('div').text()
+    } else {
+      product["Best_Before"] = ''
+    }
 
-    product["Best_Before"] = $("div[class=_2aZyWI]").find("div").eq(3).last().text()
 
     product["Price"] = $("div[class=_3n5NQx]")
       .first()
