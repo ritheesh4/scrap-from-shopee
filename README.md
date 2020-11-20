@@ -1,4 +1,4 @@
-# scrape-it
+# scrape
 A script to scrape product details from the lazada
 
 ## Run the script
