@@ -1,5 +1,9 @@
 node_modules/
 *.html
 scrape.js
-.vimspector
+.vimspector.json
+output/*
+
+# exception to the rule
+!output/.keep 
 
