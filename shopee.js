@@ -14,21 +14,21 @@ const Shopee = (html, url) => {
     // link
     product["link"] = url;
 
-    // Product category
+    //1. Product category
     product["Product_Category"] = $("a[class=JFOy4z]").last().text()
 
-    // Product name
+    //2. Product name
     product["Product_Name"] = $("div[class=qaNIZv]")
       .find("span")
       .first()
       .text();
 
-    // Brand name
+    //3. Brand name
     product["Brand"] = $("a[class=_2H-513]")
       .first()
       .text();
 
-    // Best before   
+    //4. Best before   
     const BestBeforeLabel = $("div[class=_2aZyWI]").find("div").eq(3).find('label').text()
     if (BestBeforeLabel === 'Best Before') {
       product["Best_Before"] = $("div[class=_2aZyWI]").find("div").eq(3).find('div').text()
@@ -36,7 +36,7 @@ const Shopee = (html, url) => {
       product["Best_Before"] = ''
     }
 
-    // Stock available
+    //5. Stock available
     $("div[class=_2aZyWI]")
       .children()
       .each((i, elem) => {
@@ -46,39 +46,44 @@ const Shopee = (html, url) => {
         }
       })
 
-    // Price
+    //6. Price
     product["Price"] = $("div[class=_3n5NQx]")
       .first()
       .text();
 
-    //Rating count    
+    //7. Discount
+    product["Discount"] = $("div[class=MITExd]").text()
+    
+    //8. 
+
+    //10. Rating count    
     product["Ratings_count"] = $("div.flex.M3KjhJ").first().text()
 
-    // Number of ratings
+    //11. Number of ratings
     product["#_of_ratings"] = $("div[class=_3Oj5_n]").text()
 
-    // Sold
+    //12. Sold
     product["Sold"] = $("div[class=_22sp0A]").text()
 
-    // Shipping fee  
+    //14. Shipping fee  
      product["Shipping_fee"] = $("div.flex.items-center.BtHdNz").first().text()
 
-    // Shoping ratings
+    //14. Shop ratings
     product["Shop_Ratings"] = $("div[class=_3mK1I2]").find('span').first().text()
 
-    // Products count
+    //15.1 Products count
     product["Products_count"] = $("div[class=_3mK1I2]").find('span').eq(1).text()
     
-    // Response rate
+    //15.2 Response rate
     product["Response_rate"] = $("div[class=_3mK1I2]").find('span').eq(2).text()
 
-    // Reponse Time
+    //15.3 Reponse Time
     product["Response_Time"] = $("div[class=_3mK1I2]").find('span').eq(3).text()
 
-    // Followers
+    //15.4 Followers
     product["Followers"] = $("div[class=_3mK1I2]").find('span').eq(5).text()
-    
-    // Shop voucher
+
+    //15.5 Shop voucherUntitled Document 1
     product["Shop_voucher"] = $("span.voucher-promo-value").text()
 
 
