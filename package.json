@@ -2,7 +2,7 @@
   "name": "scrape-it",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "prakhil-tp <prakhil.tp@gmail.com>",
+  "author": "ritheesh <ritheesh.4@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
