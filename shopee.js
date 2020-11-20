@@ -77,13 +77,13 @@ const Shopee = (html, url) => {
     //15.2 Response rate
     product["Response_rate"] = $("div[class=_3mK1I2]").find('span').eq(2).text()
 
-    //15.3 Reponse Time
+    //15.3 Response Time
     product["Response_Time"] = $("div[class=_3mK1I2]").find('span').eq(3).text()
 
     //15.4 Followers
     product["Followers"] = $("div[class=_3mK1I2]").find('span').eq(5).text()
 
-    //15.5 Shop voucherUntitled Document 1
+    //15.5 Shop voucher
     product["Shop_voucher"] = $("span.voucher-promo-value").text()
 
     console.log(product)

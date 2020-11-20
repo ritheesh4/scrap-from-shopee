@@ -12,7 +12,7 @@ const cheerio = require("cheerio");
 function createFile(path) {
   fs.writeFileSync(
     path,
-    "LINK, TITLE, CATEGORY, BRAND, PRICE, DISCOUNT, PROMOTION, SELLER, POSITIVE SELLER RATING, SHIP ON TIME, CHAT RESPONSE RATE, AUTHENTICITY, WARRANTY TYPE, WARRANTY PERIOD, STANDARD DELIVERY TIME (Metro manilla), SHIPPING COST (Metro manilla), RATING, 5 STAR RATING COUNT, 4 STAR RATING COUNT, 3 STAR RATING COUNT, 2 STAR RATING COUNT, 1 STAR RATING COUNT, AVAILABILITY"
+    "LINK, Product category, Product Name, Brand, Best Before, Stock available, Price, Discount, Ratings count, # of ratings, Sold, Shipping fee, Shop Ratings, Products count, Response rate, Response time, Followers, Shop voucher"
   );
 }
 
