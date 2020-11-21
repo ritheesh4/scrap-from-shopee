@@ -7,7 +7,9 @@ const Shopee = (html, url) => {
    * A fuction which returns Product details
    * @function getProduct
    * @returns {object} - returns a JSON object
+   * 
    */
+
   const getProduct = () => {
     const product = {};
 
@@ -29,11 +31,17 @@ const Shopee = (html, url) => {
       .text();
 
     //4. Best before   
-    const BestBeforeLabel = $("div[class=_2aZyWI]").find("div").eq(3).find('label').text()
+    let BestBeforeLabel = $("div[class=_2aZyWI]").find("div").eq(3).find('label').text()
     if (BestBeforeLabel === 'Best Before') {
       product["Best_Before"] = $("div[class=_2aZyWI]").find("div").eq(3).find('div').text()
     } else {
-      product["Best_Before"] = ''
+      // product["Best_Before"] = ''
+      BestBeforeLabel = $("div[class=_2aZyWI]").find("div").eq(2).find('label').text()
+      if (BestBeforeLabel === 'Best Before') {
+        product["Best_Before"] = $("div[class=_2aZyWI]").find("div").eq(2).find('div').text()
+      } else {
+        product["Best_Before"] = ''
+      }
     }
 
     //5. Stock available
@@ -53,8 +61,12 @@ const Shopee = (html, url) => {
 
     //7. Discount
     product["Discount"] = $("div[class=MITExd]").text()
-    
-    //8. 
+
+    //8. Promo
+    product["Promo"] = $("span.voucher-promo-value").text()
+
+    //9..Bundle deal recommendation
+    product["Bundle_deal_recommendation"] = $("div._3MJQdO.-fk5U-").first().text()
 
     //10. Rating count    
     product["Ratings_count"] = $("div.flex.M3KjhJ").first().text()
@@ -65,15 +77,18 @@ const Shopee = (html, url) => {
     //12. Sold
     product["Sold"] = $("div[class=_22sp0A]").text()
 
+    //13. Free shipping with order of xx
+    product["Free_shipping_with_order_of_xx"] = $("div._2bOZ3_").last().text()
+
     //14. Shipping fee  
-     product["Shipping_fee"] = $("div.flex.items-center.BtHdNz").first().text()
+    product["Shipping_fee"] = $("div.flex.items-center.BtHdNz").first().text()
 
     //14. Shop ratings
     product["Shop_Ratings"] = $("div[class=_3mK1I2]").find('span').first().text()
 
     //15.1 Products count
     product["Products_count"] = $("div[class=_3mK1I2]").find('span').eq(1).text()
-    
+
     //15.2 Response rate
     product["Response_rate"] = $("div[class=_3mK1I2]").find('span').eq(2).text()
 
