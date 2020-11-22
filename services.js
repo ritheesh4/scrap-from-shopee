@@ -12,7 +12,7 @@ const cheerio = require("cheerio");
 function createFile(path) {
   fs.writeFileSync(
     path,
-    "LINK, Product category, Product Name, Brand, Best Before, Stock available, Price, Discount, Promo, Bundle deal recommendation, Ratings count, # of ratings, Sold, Free shipping with order of xx, Shipping fee, Shop Ratings, Products count, Response rate, Response time, Followers, Shop voucher"
+    "LINK, Product category, Product Name, Brand, Shop, Best Before, Stock available, Price, Discount, Promo, Bundle deal recommendation, Ratings count, # of ratings, Sold, Free shipping with order of xx, Shipping fee, Shop Ratings, Products count, Response rate, Response time, Followers, Shop voucher"
   );
 }
 

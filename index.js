@@ -15,7 +15,7 @@ const csv = require("csvtojson");
       const shopee = Shopee(html, url);
       const product = shopee.getProduct();
       services.appendToFile(filename, product);
-      const delay = 200 * 1000; // 30  Seconds
+      const delay = 30 * 1000; // 30  Seconds
       await new Promise((resolve) => setTimeout(resolve, delay));
     } else {
       services.appendToFile(filename, null);
