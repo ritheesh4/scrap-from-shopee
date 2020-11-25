@@ -2,6 +2,7 @@ const fs = require("fs");
 const UserAgent = require("user-agents");
 const puppeteer = require("puppeteer");
 const cheerio = require("cheerio");
+const cliProgress = require("cli-progress");
 
 /**
  * A helper function to create csv file
@@ -12,7 +13,7 @@ const cheerio = require("cheerio");
 function createFile(path) {
   fs.writeFileSync(
     path,
-    "LINK, Product category, Product Name, Brand, Shop, Best Before, Stock available, Price, Discount, Promo, Bundle deal recommendation, Ratings count, # of ratings, Sold, Free shipping with order of xx, Shipping fee, Shop Ratings, Products count, Response rate, Response time, Followers, Shop voucher"
+    "LINK, PRODUCT CATEGORY, PRODUCT NAME, BRAND, SHOP, BEST BEFORE, STOCK AVAILABLE, PRICE, DISCOUNT, PROMO, BUNDLE DEAL RECOMMENDATION, RATINGS COUNT, # OF RATINGS, SOLD, FREE SHIPPING WITH ORDER OF XX, SHIPPING FEE, SHOP RATINGS, PRODUCTS COUNT, RESPONSE RATE, RESPONSE TIME, FOLLOWERS, SHOP VOUCHER"
   );
 }
 
@@ -43,13 +44,13 @@ function appendToFile(filePath, data) {
  * @returns {string} - html as string.
  */
 async function getHtml(url) {
-  //const browser = await puppeteer.launch({ headless: false });
+  // const browser = await puppeteer.launch({ headless: false });
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  const userAgent = new UserAgent();
-  await page.setUserAgent(userAgent.toString());
+  // const userAgent = new UserAgent();
+  // await page.setUserAgent(userAgent.toString());
   //page.setDefaultNavigationTimeout(0);
-  await page.goto(url, { timeout: 0 });
+  try { await page.goto(url, { timeout: 12000, waitUntil: "networkidle0" }); } catch { }
 
   const html = await page.content();
   await browser.close();
@@ -85,4 +86,30 @@ function getDate() {
   return [year, month, day].join("");
 }
 
-module.exports = { appendToFile, getHtml, createFile, getDate, validateUrl };
+/**
+ * Helper function to handle logs on console
+ * @function initiateLog
+ * @returns {object}
+ */
+
+function initiateLog(total) {
+  const logBar = new cliProgress.SingleBar({
+    format:
+      "Shopee |" +
+      "{bar}" +
+      "| {percentage}% || {value}/{total} links || {title}",
+    hideCursor: true
+  });
+  logBar.start(total, 0, { title: "" });
+  return logBar;
+}
+
+
+module.exports = {
+  appendToFile,
+  getHtml,
+  createFile,
+  getDate,
+  validateUrl,
+  initiateLog
+};
