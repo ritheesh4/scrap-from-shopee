@@ -20,10 +20,7 @@ const csv = require("csvtojson");
       const shopee = Shopee(html, url);
       const product = shopee.getProduct();
       services.appendToFile(filename, product);
-      // const delay = 30 * 1000; // To wait until 30 Seconds to avoid detection
-      // await new Promise((resolve) => setTimeout(resolve, delay));
-      //log
-      log.increment({ title: product.title });
+      log.increment({ title: product.Product_Name });
     } else {
       services.appendToFile(filename, null);
       log.increment({ title: "N.A" });

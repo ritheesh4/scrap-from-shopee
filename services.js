@@ -44,13 +44,9 @@ function appendToFile(filePath, data) {
  * @returns {string} - html as string.
  */
 async function getHtml(url) {
-  // const browser = await puppeteer.launch({ headless: false });
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  // const userAgent = new UserAgent();
-  // await page.setUserAgent(userAgent.toString());
-  //page.setDefaultNavigationTimeout(0);
-  try { await page.goto(url, { timeout: 12000, waitUntil: "networkidle0" }); } catch { }
+  try { await page.goto(url, { waitUntil: "networkidle0" }); } catch { }
 
   const html = await page.content();
   await browser.close();

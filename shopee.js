@@ -104,7 +104,6 @@ const Shopee = (html, url) => {
     //16.5 Shop voucher
     product["Shop_voucher"] = $("span.voucher-promo-value").text()
 
-    console.log(product)
     return product;
   };
 
